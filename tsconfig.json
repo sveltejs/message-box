@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"declaration": true,
+		"declarationDir": "types",
+		"emitDeclarationOnly": true,
+		"noEmit": true,
+		"rootDir": "./src",
+		"types": ["node"]
+	},
+	"include": ["./src"]
+}
