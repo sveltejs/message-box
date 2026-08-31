@@ -125,6 +125,37 @@ export function renderText(text, options) {
 }
 ```
 
+## Message structure
+
+The markdown should contain a list of messages, where each message begins with an `<h2>` containing the message `code`...
+
+```md
+## my_message_code
+```
+
+...followed by one or more blockquotes containing the message `variants`, in order of increasing arity:
+
+```md
+> This is a variant without any variables
+
+> This is a variant with a %foo% variable
+
+> This is a variant with %foo% and %bar% variables
+```
+
+Any additional content before the next heading (such as a detailed explanation of the message, suitable for inclusion in documentation) is stored as the message `details`.
+
+The variant is selected based on which values are provided — for example if a function generated from the variants above is called with `{ foo: '...' }` but no `bar`, then the second variant will be selected.
+
+## Replacements
+
+The following strings are replaced inside the template:
+
+- `CODE` is derived from the header
+- `DESCRIPTION` is the text of the first variant, suitable for inclusion in (for example) a JSDoc comment
+- `VALUES` is the type of an object containing variables, suitable for use as a type annotation
+- `MESSAGE` is a function that, given a `VALUES` object, returns a rendered string
+
 ## License
 
 [MIT](LICENSE.md)
