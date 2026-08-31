@@ -116,5 +116,5 @@ export function render(message, template) {
 		.replaceAll('CODE', message.code)
 		.replaceAll('DESCRIPTION', message.variants[0].text)
 		.replaceAll('VALUES', Array.from(values).join(' | '))
-		.replaceAll('MESSAGE', `((_) => ${expression})`);
+		.replaceAll('MESSAGE', `((_ = {}) => ${expression})`);
 }

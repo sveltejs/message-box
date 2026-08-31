@@ -74,3 +74,39 @@ test('parses a message with multiple variants', () => {
 		}
 	]);
 });
+
+test('renders a function', () => {
+	const markdown = deindent(`
+		## foo
+
+		> Hello stranger
+
+		> Hello %name%
+	`);
+
+	const [message] = parse(markdown);
+
+	const template = deindent(`
+		/**
+		 * @param {VALUES} values
+		 */
+		function CODE(values) {
+			return {
+				message: MESSAGE(values)
+			};
+		}
+	`);
+
+	const code = render(message, template);
+	const fn = new Function(`${code}\n\nreturn foo`)();
+
+	assert.ok(code.includes('@param {void | { "name": string }} values'));
+
+	assert.deepEqual(fn(), {
+		message: 'Hello stranger'
+	});
+
+	assert.deepEqual(fn({ name: 'world' }), {
+		message: 'Hello world'
+	});
+});
