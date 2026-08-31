@@ -1,5 +1,5 @@
 {
-  "name": "@sveltejs/errata",
+  "name": "@sveltejs/message-box",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -9,7 +9,6 @@
       "default": "./src/index.js"
     }
   },
-  "bin": "./src/cli.js",
   "scripts": {
     "test": "node test",
     "build": "tsc -p tsconfig.json"
@@ -18,13 +17,7 @@
   "author": "",
   "license": "MIT",
   "packageManager": "pnpm@10.32.1",
-  "dependencies": {
-    "acorn": "^8.18.0",
-    "esrap": "^2.3.6",
-    "zimmerframe": "^1.1.4"
-  },
   "devDependencies": {
-    "@types/estree": "^1.0.9",
     "@types/node": "^26.4.0",
     "typescript": "^7.0.2"
   }

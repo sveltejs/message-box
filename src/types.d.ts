@@ -6,17 +6,13 @@ export interface Message {
 	/**
 	 * One or more message variants, authored as markdown blockquotes
 	 */
-	variants: string[];
+	variants: Array<{
+		text: string;
+		variables: string[];
+	}>
 	/**
 	 * Any additional details that are excluded from the generated module,
 	 * but which may be used elsewhere (e.g. on a website)
 	 */
 	details?: string;
-}
-
-export interface Comment {
-	type: 'Line' | 'Block';
-	start: number;
-	end: number;
-	value: string;
 }

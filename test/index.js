@@ -1,26 +1,76 @@
-import fs from 'node:fs';
+// @ts-check
+import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { generate } from '../src/index.js';
-import { fileURLToPath } from 'node:url';
-
-const fixtures = fileURLToPath(new URL('./fixtures', import.meta.url));
+import { parse, render } from '../src/index.js';
 
 Error.stackTraceLimit = Infinity;
 
-for (const dir of fs.readdirSync(fixtures)) {
-	const input = `${fixtures}/${dir}/input`;
-	const output = `${fixtures}/${dir}/output`;
-	const actual = `${fixtures}/${dir}/.actual`;
+/**
+ * @param {string} str
+ */
+function deindent(str) {
+	const indentation = /^[ \t]+/m.exec(str)?.[0] ?? '';
+	const regex = new RegExp(`^${indentation}`, 'gm');
 
-	const template = fs.readFileSync(`${input}/template.js`, 'utf-8');
-	const markdown = fs.readFileSync(`${input}/messages.md`, 'utf-8');
-
-	const { module, messages } = generate({ template, markdown });
-
-	if (!fs.existsSync(actual)) fs.mkdirSync(actual);
-	fs.writeFileSync(`${actual}/generated.js`, module);
-	fs.writeFileSync(`${actual}/messages.json`, JSON.stringify(messages, null, '\t'));
-
-	assert.equal(module, fs.readFileSync(`${output}/generated.js`, 'utf-8'));
-	assert.deepEqual(messages, JSON.parse(fs.readFileSync(`${output}/messages.json`, 'utf-8')));
+	return str.replace(regex, '').trim();
 }
+
+test('parses a simple message', () => {
+	const markdown = deindent(`
+		## foo
+
+		> This is the foo message
+
+		Here are some details about foo
+	`);
+
+	const messages = parse(markdown);
+
+	assert.deepEqual(messages, [
+		{
+			code: 'foo',
+			variants: [
+				{
+					text: 'This is the foo message',
+					variables: []
+				}
+			],
+			details: 'Here are some details about foo'
+		}
+	]);
+});
+
+test('parses a message with variables', () => {
+	const markdown = deindent(`
+		## foo
+
+		> This message includes \`%stuff%\`
+	`);
+
+	const messages = parse(markdown);
+
+	assert.deepEqual(messages[0].variants[0].variables, ['stuff']);
+});
+
+test('parses a message with multiple variants', () => {
+	const markdown = deindent(`
+		## foo
+
+		> This variant has no variables
+
+		> This variant has \`%stuff%\`
+	`);
+
+	const messages = parse(markdown);
+
+	assert.deepEqual(messages[0].variants, [
+		{
+			text: 'This variant has no variables',
+			variables: []
+		},
+		{
+			text: 'This variant has `%stuff%`',
+			variables: ['stuff']
+		}
+	]);
+});
