@@ -124,3 +124,7 @@ export function renderText(text, options) {
 	// ...
 }
 ```
+
+## License
+
+[MIT](LICENSE.md)
