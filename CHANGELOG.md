@@ -1,5 +1,15 @@
 # @sveltejs/message-box
 
+## 1.1.0
+
+### Minor Changes
+
+- feat: render expression directly where possible ([#7](https://github.com/sveltejs/message-box/pull/7))
+
+### Patch Changes
+
+- fix: handle `$$` in replacements ([#7](https://github.com/sveltejs/message-box/pull/7))
+
 ## 1.0.3
 
 ### Patch Changes
