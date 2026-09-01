@@ -29,12 +29,13 @@ export function parse(markdown) {
 			throw new Error('No message text');
 		}
 
+		/** @type {Set<string>} */
+		const variables = new Set();
+
 		seen.add(code);
 		messages.push({
 			code,
 			variants: sections.map((section) => {
-				const variables = new Set();
-
 				for (const match of section.matchAll(/%(.+?)%/g)) {
 					variables.add(match[1]);
 				}
