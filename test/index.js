@@ -82,6 +82,8 @@ test('renders a function', () => {
 		> Hello stranger
 
 		> Hello %name%
+
+		> %message% %name%
 	`);
 
 	const [message] = parse(markdown);
@@ -100,7 +102,12 @@ test('renders a function', () => {
 	const code = render(message, template);
 	const fn = new Function(`${code}\n\nreturn foo`)();
 
-	assert.ok(code.includes('@param {void | { "name": string }} values'));
+	assert.ok(
+		code.includes(
+			'@param {void | { "name": string } | { "name": string, "message": string }} values'
+		),
+		code
+	);
 
 	assert.deepEqual(fn(), {
 		message: 'Hello stranger'
@@ -108,6 +115,10 @@ test('renders a function', () => {
 
 	assert.deepEqual(fn({ name: 'world' }), {
 		message: 'Hello world'
+	});
+
+	assert.deepEqual(fn({ name: 'world', message: 'Greetings' }), {
+		message: 'Greetings world'
 	});
 });
 
