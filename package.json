@@ -5,6 +5,10 @@
 	"keywords": [],
 	"license": "MIT",
 	"author": "",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sveltejs/message-box"
+	},
 	"files": [
 		"src",
 		"types"

@@ -6,7 +6,8 @@
 	"changelog": [
 		"@changesets/changelog-github",
 		{
-			"repo": "sveltejs/message-box"
+			"repo": "sveltejs/message-box",
+			"template": "\n- {summary} {ref}"
 		}
 	],
 	"commit": false,
