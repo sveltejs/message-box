@@ -1,5 +1,11 @@
 # @sveltejs/message-box
 
+## 1.1.2
+
+### Patch Changes
+
+- fix: generate more forgiving types ([#11](https://github.com/sveltejs/message-box/pull/11))
+
 ## 1.1.1
 
 ### Patch Changes
