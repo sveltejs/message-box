@@ -11,9 +11,7 @@ export function parse(markdown) {
 	/** @type {Message[]} */
 	const messages = [];
 
-	for (const match of markdown.matchAll(
-		/#+ ([\w]+)\n\n([^]+?)(?=$|\n\n#+ )/g
-	)) {
+	for (const match of markdown.matchAll(/#+ (.+?)\n\n([^]+?)(?=$|\n\n#+ )/g)) {
 		const [_, code, text] = match;
 
 		if (seen.has(code)) {
@@ -71,6 +69,23 @@ export function render(message, template) {
 		}
 	}
 
+	return template
+		.replaceAll('CODE', () => message.code)
+		.replaceAll('DESCRIPTION', () => message.variants[0].text)
+		.replaceAll('VALUES', () => Array.from(values).join(' | '))
+		.replace(/MESSAGE\(([a-zA-Z_$][a-zA-Z0-9_$]*)\)/g, (m, name) => {
+			return render_expression(message, name);
+		})
+		.replaceAll('MESSAGE', () => {
+			return `((_) => ${render_expression(message, '_')})`;
+		});
+}
+
+/**
+ * @param {Message} message
+ * @param {string} name
+ */
+function render_expression(message, name) {
 	let expression = '``';
 	let previous_variables;
 
@@ -93,7 +108,7 @@ export function render(message, template) {
 				const str = part.replace(/(`|\${)/g, '\\$1');
 				result += str;
 			} else {
-				result += `\${_.${part.slice(1, -1)}}`;
+				result += `\${${name}.${part.slice(1, -1)}}`;
 			}
 		}
 
@@ -104,7 +119,7 @@ export function render(message, template) {
 				throw new Error('Message overloads must have new parameters');
 			}
 
-			expression = `(_.${variables[previous_variables.length]} ? ${result} : ${expression})`;
+			expression = `(${name}?.${variables[previous_variables.length]} !== undefined ? ${result} : ${expression})`;
 		} else {
 			expression = result;
 		}
@@ -112,9 +127,5 @@ export function render(message, template) {
 		previous_variables = variables;
 	}
 
-	return template
-		.replaceAll('CODE', message.code)
-		.replaceAll('DESCRIPTION', message.variants[0].text)
-		.replaceAll('VALUES', Array.from(values).join(' | '))
-		.replaceAll('MESSAGE', `((_ = {}) => ${expression})`);
+	return expression;
 }
