@@ -9,7 +9,7 @@ export interface Message {
 	variants: Array<{
 		text: string;
 		variables: string[];
-	}>
+	}>;
 	/**
 	 * Any additional details that are excluded from the generated module,
 	 * but which may be used elsewhere (e.g. on a website)

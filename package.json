@@ -1,25 +1,28 @@
 {
-  "name": "@sveltejs/message-box",
-  "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./types/index.d.ts",
-      "default": "./src/index.js"
-    }
-  },
-  "scripts": {
-    "test": "node test",
-    "build": "tsc -p tsconfig.json",
-    "prepublishOnly": "npm run build"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "packageManager": "pnpm@10.32.1",
-  "devDependencies": {
-    "@types/node": "^26.4.0",
-    "typescript": "^7.0.2"
-  }
+	"name": "@sveltejs/message-box",
+	"version": "1.0.0",
+	"description": "",
+	"keywords": [],
+	"license": "MIT",
+	"author": "",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./types/index.d.ts",
+			"default": "./src/index.js"
+		}
+	},
+	"scripts": {
+		"test": "node test",
+		"fmt": "oxfmt",
+		"build": "tsc -p tsconfig.json",
+		"prepublishOnly": "npm run build"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^3.0.1",
+		"@types/node": "^26.4.0",
+		"oxfmt": "^0.65.0",
+		"typescript": "^7.0.2"
+	},
+	"packageManager": "pnpm@10.32.1"
 }
