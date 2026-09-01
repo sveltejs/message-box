@@ -1,5 +1,11 @@
 # @sveltejs/message-box
 
+## 1.1.1
+
+### Patch Changes
+
+- fix: correctly discriminate between message variants ([#9](https://github.com/sveltejs/message-box/pull/9))
+
 ## 1.1.0
 
 ### Minor Changes
