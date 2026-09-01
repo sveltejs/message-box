@@ -5,6 +5,10 @@
 	"keywords": [],
 	"license": "MIT",
 	"author": "",
+	"files": [
+		"src",
+		"types"
+	],
 	"type": "module",
 	"exports": {
 		".": {
