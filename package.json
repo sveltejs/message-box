@@ -16,7 +16,7 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"types": "./types/index.d.ts",
+			"types": "./types/public.d.ts",
 			"default": "./src/index.js"
 		}
 	},
