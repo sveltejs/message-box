@@ -104,7 +104,7 @@ test('renders a function', () => {
 
 	assert.ok(
 		code.includes(
-			'@param {void | { "name": string } | { "name": string, "message": string }} values'
+			'@param {void | { "name": string; "message"?: string }} values'
 		),
 		code
 	);

@@ -60,14 +60,35 @@ export function parse(markdown) {
 export function render(message, template) {
 	const values = new Set();
 
+	/** @type {Map<string, boolean>} */
+	const properties = new Map();
+
+	let optional = false;
+
+	if (message.variants.some((v) => v.variables.length === 0)) {
+		values.add('void');
+	}
+
 	for (const variant of message.variants) {
 		if (variant.variables.length === 0) {
 			values.add('void');
 		} else {
-			values.add(
-				`{ ${variant.variables.map((v) => `${JSON.stringify(v)}: string`).join(', ')} }`
-			);
+			for (const v of variant.variables) {
+				if (!properties.has(v)) {
+					properties.set(v, optional);
+				}
+			}
+
+			optional = true;
 		}
+	}
+
+	if (properties.size > 0) {
+		values.add(
+			`{ ${Array.from(properties)
+				.map(([k, o]) => `${JSON.stringify(k)}${o ? '?:' : ':'} string`)
+				.join('; ')} }`
+		);
 	}
 
 	return template
