@@ -1,5 +1,11 @@
 # @sveltejs/message-box
 
+## 1.0.3
+
+### Patch Changes
+
+- fix: expose `Message` type ([#5](https://github.com/sveltejs/message-box/pull/5))
+
 ## 1.0.2
 
 ### Patch Changes
