@@ -110,3 +110,43 @@ test('renders a function', () => {
 		message: 'Hello world'
 	});
 });
+
+test('correctly replaces with $$', () => {
+	const markdown = deindent(`
+		## foo$$
+
+		> $$ behaves weirdly with replaceAll if you're not careful
+
+		Always use the function form instead of passing a string containing $$ as the second argument
+	`);
+
+	const [message] = parse(markdown);
+
+	const template = deindent(`
+		/**
+		 * DESCRIPTION
+		 * @param {VALUES} values
+		 */
+		function CODE(values) {
+			return {
+				message: MESSAGE(values)
+			};
+		}
+	`);
+
+	const code = render(message, template);
+
+	const expected = deindent(`
+		/**
+		 * $$ behaves weirdly with replaceAll if you're not careful
+		 * @param {void} values
+		 */
+		function foo$$(values) {
+			return {
+				message: \`$$ behaves weirdly with replaceAll if you're not careful\`
+			};
+		}
+	`);
+
+	assert.deepEqual(code, expected);
+});
