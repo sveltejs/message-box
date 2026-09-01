@@ -20,7 +20,9 @@
 		"test": "node test",
 		"fmt": "oxfmt",
 		"build": "tsc -p tsconfig.json",
-		"prepublishOnly": "npm run build"
+		"prepublishOnly": "npm run build",
+		"changeset:version": "changeset version && git add --all",
+		"changeset:publish": "changeset publish"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^3.0.1",
