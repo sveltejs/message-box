@@ -1,5 +1,5 @@
-/** @import { Message } from './types' */
-import type { Message } from './types';
+/** @import { Message } from './types.js' */
+import type { Message } from './types.js';
 /**
  * Extract structured data from a markdown file containing messages
  * @param {string} markdown
