@@ -1,5 +1,11 @@
 # @sveltejs/message-box
 
+## 1.1.3
+
+### Patch Changes
+
+- fix: use explicit `.js` extension in type imports so declarations work under `nodenext` ([#13](https://github.com/sveltejs/message-box/pull/13))
+
 ## 1.1.2
 
 ### Patch Changes
