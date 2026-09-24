@@ -1,4 +1,4 @@
-/** @import { Message } from './types' */
+/** @import { Message } from './types.js' */
 
 /**
  * Extract structured data from a markdown file containing messages
